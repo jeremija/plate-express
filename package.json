@@ -1,0 +1,10 @@
+{
+	"name": "plate-express",
+	"description": "app for tracking insurance expiration dates",
+	"version": "0.0.1",
+	"author": "jeremija <jerko.steiner@gmail.com>",
+	"dependencies": {
+	},
+	"devDependencies": {
+	}
+}
