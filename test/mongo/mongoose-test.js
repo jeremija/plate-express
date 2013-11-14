@@ -1,10 +1,10 @@
-var mgCreator = require('../../src/mongo/mongoose.js');
+var mongooseConfig = require('../../src/mongo/mongoose.js');
 var config = require('../../src/config.js');
 
 describe('mongo/mongoose.js', function() {
     var connection;
     it('should connect without errors', function(done) {
-        mgCreator.create(config.mongo.url, function(err, conn) {
+        mongooseConfig.init(config.mongo.url, function(err, conn) {
             expect(err).to.be(undefined);
             expect(conn).to.be.ok();
             connection = conn;
@@ -12,6 +12,9 @@ describe('mongo/mongoose.js', function() {
         });
     });
     it('should disconnect without errors', function(done) {
+        if (!connection) {
+            throw new Error('connection ' + connection);
+        }
         connection.once('close', function() {
             done();
         });

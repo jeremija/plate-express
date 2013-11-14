@@ -1,13 +1,15 @@
-describe('log/log.js', function() {
+describe(__filename, function() {
     describe('invalid config.log.type', function() {
         it('should load the default logger', function() {
-            var log = proxyquire('../src/log/log.js', {
-                '../config.js': {
-                    log: {
-                        type: 'invalid-logger-type'
-                    }
-                }
-            }).getLog('test');
+            // var log = proxyquire('../src/log/log.js', {
+            //     '../config.js': {
+            //         log: {
+            //             type: 'invalid-logger-type'
+            //         }
+            //     }
+            // }).getLog('test');
+            require('../../src/config.js').log.type = 'invalid-logger-type';
+            var log = require('../../src/log/log.js').getLog('test');
             expect(log.debug).to.be.a('function');
             expect(log.warn).to.be.a('function');
             expect(log.error).to.be.a('function');
@@ -20,13 +22,15 @@ describe('log/log.js', function() {
 
     describe('valid config.log.type: console-logger.js', function() {
         it('should load the console-logger.js logger', function() {
-            var log = proxyquire('../src/log/log.js', {
-                '../config.js': {
-                    log: {
-                        type: 'console-logger.js'
-                    }
-                }
-            }).getLog('test');
+            // var log = proxyquire('../src/log/log.js', {
+            //     '../config.js': {
+            //         log: {
+            //             type: 'console-logger.js'
+            //         }
+            //     }
+            // }).getLog('test');
+            require('../../src/config.js').log.type = 'console-logger.js';
+            var log = require('../../src/log/log.js').getLog('test');
             expect(log.debug).to.be.a('function');
             expect(log.warn).to.be.a('function');
             expect(log.error).to.be.a('function');
@@ -40,14 +44,16 @@ describe('log/log.js', function() {
     describe('compare log values using return-logger.js', function() {
         var log;
         it('should load the return-logger.js logger', function() {
-            log = proxyquire('../src/log/log.js', {
-                '../config.js': {
-                    log: {
-                        type: 'console-logger.js'
-                    }
-                },
-                './console-logger.js': require('./return-logger')
-            }).getLog('test');
+            // log = proxyquire('../src/log/log.js', {
+            //     '../config.js': {
+            //         log: {
+            //             type: 'console-logger.js'
+            //         }
+            //     },
+            //     './console-logger.js': require('./return-logger')
+            // }).getLog('test');
+            require('../../src/config.js').log.type = '../../test/log/return-logger.js';
+            log = require('../../src/log/log.js').getLog('test');
             expect(log).to.be.ok();
             expect(log.loggerInstance.type).to.be('return-logger');
         });

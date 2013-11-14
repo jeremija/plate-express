@@ -1,3 +1,4 @@
+var expect = require('expect.js');
 var config = require('../src/config.js');
 
 describe('config.js', function() {

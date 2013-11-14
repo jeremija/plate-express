@@ -1,6 +1,6 @@
 var log = require('../../src/log/console-logger.js');
 
-describe('log/console.js', function() {
+describe(__filename, function() {
     it('should have property type set', function() {
         expect(log.type).to.be('console');
     });

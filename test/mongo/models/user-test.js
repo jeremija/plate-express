@@ -1,11 +1,11 @@
-var mgCreator = require('../../../src/mongo/mongoose.js');
+var mongooseConfig = require('../../../src/mongo/mongoose.js');
 var User = require('../../../src/mongo/models/user.js');
 var config = require('../../../src/config.js');
 
 describe('mongo/models/user.js', function() {
     var connection;
     before(function(done) {
-        mgCreator.create(config.mongo.url, function(err, conn) {
+        mongooseConfig.init(config.mongo.url, function(err, conn) {
             expect(err).to.not.be.ok();
             expect(conn).to.be.ok();
             connection = conn;

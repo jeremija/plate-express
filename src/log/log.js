@@ -14,9 +14,9 @@ function getLoggerInstance(p_type) {
     return loggerInstance;
 }
 
-var loggerInstance = getLoggerInstance(config.log.type);
-
 module.exports.getLog = function(p_logId) {
+    var loggerInstance = getLoggerInstance(config.log.type);
+
     return Object.create(abstractLogger, {
         logId: {
             value: p_logId,
