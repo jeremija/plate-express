@@ -10,8 +10,8 @@ function prependArgs(p_severity, p_logId, args) {
 
 function checkInstance(p_loggerInstance) {
     if (!p_loggerInstance) {
-        throw new Error('loggerInstance not set. did you instantiate use the ' +
-            'require(\'log.js\').getLog(p_logName) function?');
+        throw new Error('loggerInstance not set. did you use the ' +
+            'require(\'log.js\').getLog() function to get the logger?');
     }
 }
 

@@ -12,5 +12,6 @@ module.exports = {
         ],
         sessionSecret: '1174d307-8373-48ec-b35f-122631f7bd95',
         port: 8000
-    }
+    },
+    dirname: __dirname
 };

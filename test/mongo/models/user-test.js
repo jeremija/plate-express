@@ -2,11 +2,14 @@ var mongooseConfig = require('../../../src/mongo/mongoose.js');
 var User = require('../../../src/mongo/models/user.js');
 var config = require('../../../src/config.js');
 
-describe('mongo/models/user.js', function() {
+describe(__filename, function() {
     var connection;
     before(function(done) {
         mongooseConfig.init(config.mongo.url, function(err, conn) {
-            expect(err).to.not.be.ok();
+            if (err) {
+                done(err);
+                return;
+            }
             expect(conn).to.be.ok();
             connection = conn;
             done();

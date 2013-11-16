@@ -18,7 +18,7 @@ function setPublicFolders(p_app, p_folders) {
 module.exports.init = function(p_port) {
     var app = express();
 
-    //from now on, everybody who requests this module will get an app instance
+    //make this app instance available to other modules
     module.exports.instance = app;
 
     setPublicFolders(app, config.express.publicFolders);
@@ -28,7 +28,7 @@ module.exports.init = function(p_port) {
         req.next();
     });
 
-    log.debug('registering cookieParser and cookieSession');
+    //cookieSession for handling user session
     app.use(express.cookieParser(config.express.sessionSecret));
     app.use(express.cookieSession());
 
@@ -36,10 +36,10 @@ module.exports.init = function(p_port) {
     log.debug('registering bodyParser');
     app.use(express.bodyParser());
 
-    log.debug('registering middleware');
+    //middleware
     require('./middleware');
 
-    log.debug('registering invalid url handler');
+    //invalid url handler
     app.use(function(req, res) {
         res.status(404).send('invalid url');
     });

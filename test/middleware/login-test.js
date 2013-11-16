@@ -57,7 +57,6 @@ describe(__filename, function() {
                     if (err) done(err);
                     expect(res.header['set-cookie'].length).to.be(1);
                     sessionCookie = res.header['set-cookie'][0];
-                    console.log(sessionCookie);
                     expect(sessionCookie).to.be.ok();
                     done();
                 });

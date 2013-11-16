@@ -1,11 +1,14 @@
 var mongooseConfig = require('../../src/mongo/mongoose.js');
 var config = require('../../src/config.js');
 
-describe('mongo/mongoose.js', function() {
+describe(__filename, function() {
     var connection;
     it('should connect without errors', function(done) {
         mongooseConfig.init(config.mongo.url, function(err, conn) {
-            expect(err).to.be(undefined);
+            if (err) {
+                done(err);
+                return;
+            }
             expect(conn).to.be.ok();
             connection = conn;
             done();
@@ -13,7 +16,8 @@ describe('mongo/mongoose.js', function() {
     });
     it('should disconnect without errors', function(done) {
         if (!connection) {
-            throw new Error('connection ' + connection);
+            done(new Error('connection ' + connection));
+            return;
         }
         connection.once('close', function() {
             done();
