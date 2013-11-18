@@ -1,4 +1,28 @@
+var User = require('../../src/mongo/models/user.js');
+
 describe(__filename, function() {
+
+    before(function(done) {
+        var user = new User({
+            firstName: 'john',
+            lastName: 'travolta',
+            email: 'john@travolta.com',
+            enabled: true
+        });
+
+        user.setPassword('jontra');
+        user.save(function(err) {
+            done(err);
+        });
+    });
+
+    after(function(done) {
+        User.find({
+            email: 'john@travolta.com'
+        }).remove(function(err) {
+            done(err);
+        });
+    });
 
     describe('GET /logout', function() {
         it('forbidden because user was never logged in', function(done) {
