@@ -55,6 +55,7 @@ describe(__filename, function() {
     it('should be able to fetch the user', function(done) {
         User.findById(user._id, function(err, foundUser) {
             expect(foundUser.email).to.be(user.email);
+            console.log('foundUser=', foundUser.toJSON());
             done();
         });
     });
