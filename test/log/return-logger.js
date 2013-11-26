@@ -22,4 +22,4 @@ module.exports = {
     error: function() {
         return getStringFromArgs(arguments);
     }
-}
+};

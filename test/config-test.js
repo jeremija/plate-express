@@ -20,4 +20,4 @@ describe(__filename, function() {
         expect(config.express.sessionSecret).to.be.a('string');
         expect(config.express.port).to.be.a('number');
     });
-})
+});

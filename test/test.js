@@ -2,7 +2,7 @@ global.expect = require('expect.js');
 // global.proxyquire = require('proxyquire');
 global.request = require('supertest');
 
-// require('./config-test.js'); //automatically included
+require('./config-test.js'); //automatically included
 require('./log/console-logger-test.js');
 // this test sets the logger to return-logger which suppresses the output
 // during tests
