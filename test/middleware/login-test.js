@@ -47,7 +47,7 @@ describe(__filename, function() {
                     'password': 'testpwd'
                 }).
                 expect(200).
-                expect('user not found').
+                expect(/error.authentication/).
                 end(function(err, res) {
                     //console.log('err', err);
                     done(err);
@@ -62,7 +62,7 @@ describe(__filename, function() {
                     'password': 'some-invalid-password'
                 }).
                 expect(200).
-                expect('invalid password').
+                expect(/error.authentication/).
                 end(function(err, res) {
                     done(err);
                 });
@@ -76,7 +76,7 @@ describe(__filename, function() {
                     'password' : 'jontra'
                 }).
                 expect(200).
-                expect('logged in').
+                expect(/john@travolta.com/).
                 end(function(err, res) {
                     if (err) done(err);
                     expect(res.header['set-cookie'].length).to.be(1);

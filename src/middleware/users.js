@@ -2,9 +2,9 @@ var app = require('../app.js').instance;
 var log = require('../log/log.js').getLog(__filename);
 
 var User = require('../mongo/models/user.js');
+var checkAuth = require('./checkAuth.js');
 
-
-app.get('/users/list', function(req, res) {
+app.get('/users/list', checkAuth, function(req, res) {
     User.find({}, function(err, users) {
         if (err) throw new Error('error while fetching user data', err);
         log.debug('/users/list:', users);
@@ -12,7 +12,7 @@ app.get('/users/list', function(req, res) {
     });
 });
 
-app.get('/users/get', function(req, res) {
+app.get('/users/get', checkAuth, function(req, res) {
     log.debug('requesting user with id: ', req.query.id);
     User.findById(req.query.id, function(err, user) {
         if (err) throw new Error('error while finding user by id', err);
@@ -24,7 +24,7 @@ app.get('/users/get', function(req, res) {
 });
 
 //should be post
-app.get('/users/add', function(req, res) {
+app.get('/users/add', checkAuth, function(req, res) {
     log.debug('adding user');
 
     var john = new User({

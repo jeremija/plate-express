@@ -45,6 +45,13 @@ userSchema.methods.isPasswordValid = function(p_password) {
     return this.passwordHash === hash(p_password, this.salt);
 };
 
+if (!userSchema.options.toObject) userSchema.options.toObject = {};
+userSchema.options.toObject.transform = function(doc, ret, options) {
+    delete ret._id;
+    delete ret.salt;
+    delete ret.passwordHash;
+};
+
 mongoose.model('User', userSchema);
 
 module.exports = mongoose.model('User');

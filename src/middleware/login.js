@@ -4,13 +4,18 @@ var log = require('../log/log.js').getLog(__filename);
 
 app.get('/logout', function(req, res) {
     if (!req.session || !req.session.userId) {
-        res.status(403).send('you were never logged in');
+        res.json(403, {
+            err: 'error.logout'
+        });
         req.session = null;
         return;
     }
     req.session = null;
 
-    res.send('you have logged out');
+    res.json({
+        err: undefined,
+        data: 'logout.success'
+    });
 });
 
 app.post('/login', function(req, res) {
@@ -25,13 +30,13 @@ app.post('/login', function(req, res) {
 
         if (err) {
             log.debug('an error ocurred while finding user with email', email);
-            res.send('error');
+            res.json(500, {error: 'error.internal'});
             return;
         }
 
         if (!user) {
             log.debug('user with email', email, 'not found');
-            res.send('user not found');
+            res.json({err: 'error.authentication', status: 'error'});
             return;
         }
 
@@ -39,7 +44,7 @@ app.post('/login', function(req, res) {
             log.debug('user with email', email, 'found, but invalid password');
             req.session = null;
             //TODO use json format
-            res.send('invalid password');
+            res.json({err: 'error.authentication', status: 'error'});
             return;
         }
 
@@ -47,6 +52,7 @@ app.post('/login', function(req, res) {
         req.session = {
             userId: email
         };
-        res.send('logged in');
+
+        res.json({err: undefined, data: user.toObject()});
     });
 });
