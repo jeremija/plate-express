@@ -17,4 +17,10 @@ describe(__filename, function() {
                 });
         });
     });
+
+    // describe('GET /users/get', function(done) {
+    //     it('should fetch the user by id', function() {
+
+    //     });
+    // });
 });
