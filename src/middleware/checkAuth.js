@@ -5,7 +5,7 @@ module.exports = function(req, res, next) {
 
     if (!req.session || !req.session.userId) {
         log.debug('user is not authorized');
-        res.status(401).json({err: 'not.authorized'});
+        res.status(401).json({error: 'not.authorized'});
     }
     else {
         log.debug('user is authorized. userId:', req.session.userId);

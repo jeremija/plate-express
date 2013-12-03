@@ -1,27 +1,9 @@
-var mongooseConfig = require('../../../src/mongo/mongoose.js');
 var User = require('../../../src/mongo/models/user.js');
-var config = require('../../../src/config.js');
 
 describe(__filename, function() {
-    var connection;
-    before(function(done) {
-        mongooseConfig.init(config.mongo.url, function(err, conn) {
-            if (err) {
-                done(err);
-                return;
-            }
-            expect(conn).to.be.ok();
-            connection = conn;
-            done();
-        });
-    });
 
-    after(function(done) {
-        connection.once('close', function() {
-            done();
-        });
-        connection.close();
-    });
+    // connect to the db before tests and disconnect afterwards
+    require('../../_helper/mongo-helper.js').init();
 
     it('should create and fail to save because of validation', function() {
         var user = new User({

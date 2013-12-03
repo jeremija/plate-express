@@ -10,6 +10,9 @@ before(function(done) {
 
     user.setPassword('jontra');
     user.save(function(err) {
+        if (err) {
+            done(err);
+        }
         request(app).
             post('/login').
             send({
@@ -25,19 +28,19 @@ before(function(done) {
     });
 });
 
-after(function(done) {
-    request(app).
-        get('/logout').
-        set('cookie', module.exports.sessionCookie).
-        expect(403).
-        end(function() {
-            User.find({
-                email: 'john@travolta.com'
-            }).remove(function(err) {
-                module.exports.sessionCookie = undefined;
-                done(err);
-            });
-        });
-});
+// after(function(done) {
+//     request(app).
+//         get('/logout').
+//         set('cookie', module.exports.sessionCookie).
+//         expect(403).
+//         end(function() {
+//             User.find({
+//                 email: 'john@travolta.com'
+//             }).remove(function(err) {
+//                 module.exports.sessionCookie = undefined;
+//                 done(err);
+//             });
+//         });
+// });
 
 module.exports.sessionCookie = undefined;

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var crypto = require('crypto');
 var uuid = require('node-uuid');
 
-Schema = mongoose.Schema;
+var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
     firstName: {
@@ -16,7 +16,9 @@ var userSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        index: {
+            unique: true
+        }
     },
     salt: {
         type: String,

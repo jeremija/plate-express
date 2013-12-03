@@ -1,6 +1,8 @@
 module.exports = {
     mongo: {
-        url: 'mongodb://127.0.0.1:27017/plate-express'
+        url: 'mongodb://127.0.0.1:27017/plate-express',
+        debug: false,
+        // autoIndex: true
     },
     log: {
         type: 'console-logger.js',

@@ -6,7 +6,7 @@ describe(__filename, function() {
         var user = new User({
             firstName: 'john',
             lastName: 'travolta',
-            email: 'john@travolta.com',
+            email: 'john2@travolta.com',
             enabled: true
         });
 
@@ -18,7 +18,7 @@ describe(__filename, function() {
 
     after(function(done) {
         User.find({
-            email: 'john@travolta.com'
+            email: 'john2@travolta.com'
         }).remove(function(err) {
             done(err);
         });
@@ -58,7 +58,7 @@ describe(__filename, function() {
             request(app).
                 post('/login').
                 send({
-                    'email': 'john@travolta.com',
+                    'email': 'john2@travolta.com',
                     'password': 'some-invalid-password'
                 }).
                 expect(200).
@@ -72,11 +72,11 @@ describe(__filename, function() {
             request(app).
                 post('/login').
                 send({
-                    'email': 'john@travolta.com',
+                    'email': 'john2@travolta.com',
                     'password' : 'jontra'
                 }).
                 expect(200).
-                expect(/john@travolta.com/).
+                expect(/john2@travolta.com/).
                 end(function(err, res) {
                     if (err) done(err);
                     expect(res.header['set-cookie'].length).to.be(1);

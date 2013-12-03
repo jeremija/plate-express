@@ -8,8 +8,15 @@ require('./log/console-logger-test.js');
 // during tests
 require('./log/log-test.js');
 
+// util
+require('./util/keygen-test.js');
+
+// mongo
 require('./mongo/mongoose-test.js');
 require('./mongo/models/user-test.js');
+require('./mongo/models/company-test.js');
+
+require('./validators/oib-validator-test.js');
 
 describe('START SERVER', function() {
     it('starting server...', function(done) {
@@ -24,8 +31,10 @@ describe('START SERVER', function() {
 // add modules which test app middleware here
 require('./middleware/users-test.js');
 require('./middleware/login-test.js');
+require('./middleware/companies-test.js');
 
 describe('STOP SERVER', function() {
+    require('./_helper/logout-helper.js');
     it('stopping server...', function(done) {
         require('../src/startup.js').stop(done);
     });

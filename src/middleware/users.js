@@ -1,15 +1,13 @@
 var app = require('../app.js').instance;
 var log = require('../log/log.js').getLog(__filename);
+var errors = require('../mongo/errors.js');
 
 var User = require('../mongo/models/user.js');
 var checkAuth = require('./checkAuth.js');
 
 app.get('/users/list', checkAuth, function(req, res) {
     User.find({}, function(err, users) {
-        if (err) {
-            log.error('/users/list: error while fetching user data', err);
-            res.json({err: 'error.find'});
-        }
+        if (err) return errors.handleError(err, res);
         res.json({err: undefined, data: users});
     });
 });
