@@ -1,5 +1,14 @@
 var mongoose = require('mongoose');
-var oibValidator = require('../../validators/oib-validator.js');
+var oibValidator = require('./src/validators/oib-validator.js');
+
+mongoose.set('debug', true);
+
+mongoose.connect('mongodb://127.0.0.1:27017/plate-express');
+var conn = mongoose.connection;
+
+conn.on('error', function(err) {
+    throw err;
+});
 
 var Schema = mongoose.Schema;
 
@@ -31,8 +40,8 @@ var companySchema = new Schema({
     }
 });
 
-// companySchema.set('autoIndex', falsea);
+mongoose.model('Company', companySchema);
 
-var Company = mongoose.model('Company', companySchema);
-
-module.exports = mongoose.model('Company');
+setTimeout(function() {
+    console.log('end');
+}, 5000);

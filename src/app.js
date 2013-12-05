@@ -22,6 +22,7 @@ module.exports.init = function(p_port) {
     module.exports.instance = app;
 
     setPublicFolders(app, config.express.publicFolders);
+
     app.use(function(req, res) {
         //log request urls TODO write client's IP address
         log.debug('request:', req.originalUrl);

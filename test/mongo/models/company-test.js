@@ -50,17 +50,19 @@ describe(__filename, function() {
             expect(err).to.not.be.ok();
             expect(company).to.have.property('_id');
             expect(company).to.have.property('shortId');
-            expect(company.shortId).to.match(
-                new RegExp('12222-[0-9a-f]{6}'));
-            // done();
+            expect(company.shortId).to.match(/12222-[0-9a-f]{6}/);
+            done();
         });
+    });
+    it('should update successfully', function(done) {
+        company.name = 'changed name';
 
         company.save(function(err, company) {
             expect(err).to.not.be.ok();
             expect(company).to.have.property('_id');
             expect(company).to.have.property('shortId');
-            expect(company.shortId).to.match(
-                new RegExp('12222-[0-9a-f]{6}'));
+            expect(company.shortId).to.match(/12222-[0-9a-f]{6}/);
+            expect(company.name).to.be('changed name');
             done();
         });
     });
