@@ -10,8 +10,11 @@ module.exports = {
     },
     express: {
         publicFolders: [
-            '/public'
+            '/www-public'
         ],
+        // privateFolders: [
+        //     '/www-private'
+        // ],
         sessionSecret: '1174d307-8373-48ec-b35f-122631f7bd95',
         port: 8000
     },

@@ -2,7 +2,7 @@ var log = require('./log/log.js').getLog(__filename);
 var config = require('./config.js');
 var express = require('express');
 
-function setPublicFolders(p_app, p_folders) {
+function setStaticFolders(p_app, p_folders) {
     if (!p_folders || p_folders.length === 0) {
         log.debug('no public folders to set');
         return;
@@ -21,7 +21,7 @@ module.exports.init = function(p_port) {
     //make this app instance available to other modules
     module.exports.instance = app;
 
-    setPublicFolders(app, config.express.publicFolders);
+    setStaticFolders(app, config.express.publicFolders);
 
     app.use(function(req, res) {
         //log request urls TODO write client's IP address
@@ -33,12 +33,16 @@ module.exports.init = function(p_port) {
     app.use(express.cookieParser(config.express.sessionSecret));
     app.use(express.cookieSession());
 
-    //to be able to get the req.body parameters on POST request
+    //to be able to read the req.body parameters on POST request
     log.debug('registering bodyParser');
     app.use(express.bodyParser());
 
     //middleware
     require('./middleware');
+
+    app.use(require('./middleware/checkAuth'));
+
+    // setStaticFolders(app, config.express.privateFolders);
 
     //invalid url handler
     app.use(function(req, res) {
