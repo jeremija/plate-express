@@ -24,8 +24,8 @@ function getMongoErrorMessage(err) {
     return msg;
 }
 
-module.exports.handleError = function(err, res) {
-    log.error('an error has occurred: ', err, err.stack);
+module.exports.handleError = function(url, err, res) {
+    log.error('an error has occurred on url ' + url, err, err.stack);
     switch(err.name) {
         case 'ValidationError':
             res.json({error: err});

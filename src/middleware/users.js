@@ -5,25 +5,15 @@ var errors = require('../mongo/errors.js');
 var User = require('../mongo/models/user.js');
 var checkAuth = require('./checkAuth.js');
 
+var common = require('./common.js');
+
 app.get('/users/list', checkAuth, function(req, res) {
-    User.find({}, function(err, users) {
-        if (err) return errors.handleError(err, res);
-        res.json({err: undefined, data: users});
-    });
+    User.find({}, common.json(req, res));
 });
 
 app.get('/users/get', checkAuth, function(req, res) {
     log.debug('requesting user with id: ', req.query.id);
-    User.findById(req.query.id, function(err, user) {
-        if (err) {
-            log.error('/users/get: error while finding user', err);
-            res.json({err: 'error.find', data: user});
-        }
-
-        //res.send(JSON.stringify(user.toObject()));
-        //res.setHeader('Content-Type', 'application/json');
-        res.json({err: undefined, data: user});
-    });
+    User.findById(req.query.id, common.json(req, res));
 });
 
 //should be post
@@ -39,14 +29,5 @@ app.post('/users/add', checkAuth, function(req, res) {
 
     john.setPassword('jontra');
 
-    john.save(function(err, user) {
-        if (err) {
-            log.error('/users/add: error while saving user', err);
-            res.json({err: 'error.save'});
-            return;
-        }
-
-        log.debug('user saved: ' + john.toObject());
-        res.json({err: undefined, data: user});
-    });
+    john.save(common.json(req, res));
 });
