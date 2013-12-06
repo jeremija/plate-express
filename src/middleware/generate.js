@@ -37,19 +37,23 @@ module.exports.middleware = function(p_model, p_restPath) {
     });
 
     app.post(path('save'), checkAuth, function(req, res) {
-        var model = new Model(req.body);
-        model.shortId = model.shortId || keygen.generate(model.name);
-
-        model.save(function(err, data) {
+        var data = req.body;
+        data.shortId = data.shortId || keygen.generate(data.name);
+        Model.findOneAndUpdate({
+            shortId: data.shortId
+        }, data, {
+            upsert: true
+        }, function(err, data) {
             if (err) return errors.handleError(err, res);
-            res.json({data: data});
+            res.json({error: undefined, data: data});
         });
     });
 
     app.post(path('delete'), checkAuth, function(req, res) {
-        var model = new Model(req.body);
-
-        model.remove(function(err, data) {
+        var shortId = req.body.shortId;
+        Model.findOneAndRemove({
+            shortId: shortId
+        }, {}, function(err, data) {
             if (err) return errors.handleError(err, res);
             res.json({error: undefined, data: data});
         });

@@ -15,6 +15,7 @@ require('./util/keygen-test.js');
 require('./mongo/mongoose-test.js');
 require('./mongo/models/user-test.js');
 require('./mongo/models/company-test.js');
+require('./mongo/models/car-insurance-test.js');
 
 require('./validators/oib-validator-test.js');
 

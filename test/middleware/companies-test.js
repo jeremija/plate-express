@@ -60,7 +60,6 @@ describe(__filename, function() {
                 .expect(new RegExp('"shortId": *?"' + documents[0].shortId + '"'))
                 .expect(new RegExp('"name": *?"' + documents[0].name + '"'))
                 .end(function(err, res) {
-                    console.log(JSON.stringify(res ? res.body : 'res undef'));
                     expect(res.body.error).to.not.be.ok();
                     done(err);
                 });
@@ -103,6 +102,7 @@ describe(__filename, function() {
         });
     });
 
+    var shortId;
     describe('POST /companies/save', function() {
         var insertedCompany;
         it('should save company', function(done) {
@@ -121,6 +121,7 @@ describe(__filename, function() {
                     expect(res.body.data.shortId)
                         .to.match(/acompan23-[a-z0-9]{6}/);
                     insertedCompany = res.body.data;
+                    shortId = insertedCompany.shortId;
                     done();
                 });
         });
@@ -141,8 +142,44 @@ describe(__filename, function() {
                     done();
                 });
         });
+        it('should update company', function(done) {
+            request(app)
+                .post('/companies/save')
+                .send({
+                    shortId: shortId,
+                    name: 'a-compan20'
+                })
+                .set('cookie', logonHelper.sessionCookie)
+                .expect('Content-Type', /json/)
+                .end(function(err, res) {
+                    if (err) done(err);
+                    expect(res.body.error).to.not.be.ok();
+                    expect(res.body.data).to.be.ok();
+                    expect(res.body.data.shortId).to.be(shortId);
+                    expect(res.body.data.name).to.be('a-compan20');
+                    done();
+                });
+        });
     });
 
+    describe('POST /companies/delete', function() {
+        it('should delete the inserted company', function(done) {
+            request(app)
+                .post('/companies/delete')
+                .send({
+                    shortId: shortId
+                })
+                .set('cookie', logonHelper.sessionCookie)
+                .expect('Content-Type', /json/)
+                .end(function(err, res) {
+                    if (err) done(err);
+                    expect(res.body.error).to.not.be.ok();
+                    expect(res.body.data).to.be.ok();
+                    expect(res.body.data.shortId).to.be(shortId);
+                    done();
+                });
+        });
+    });
 
 
     // describe('POST /companies/save', function(done) {

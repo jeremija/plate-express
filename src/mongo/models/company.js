@@ -28,7 +28,11 @@ var companySchema = new Schema({
             unique: true
         },
         validate: [oibValidator.validate, 'error.invalid.company.oib']
-    }
+    },
+    carInsurances: [{
+        type: Number,
+        ref: 'CarInsurance'
+    }]
 });
 
 // companySchema.set('autoIndex', falsea);

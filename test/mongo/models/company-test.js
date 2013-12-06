@@ -3,8 +3,6 @@ var keygen = require('../../../src/util/keygen.js');
 
 describe(__filename, function() {
 
-    // connect to the db before tests and disconnect afterwards
-
     var company;
     before(function() {
         company = new Company({
@@ -21,6 +19,7 @@ describe(__filename, function() {
         });
     });
 
+    // connect to the db before tests and disconnect afterwards
     require('../../_helper/mongo-helper.js').init();
 
     it('should fail to save because name invalid', function(done) {
