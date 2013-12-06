@@ -5,7 +5,7 @@ before(function(done) {
     request(app).
         get('/logout').
         set('cookie', module.exports.sessionCookie).
-        expect(403).
+        expect(200).
         end(function(err) {
             if (err) {
                 done(err);

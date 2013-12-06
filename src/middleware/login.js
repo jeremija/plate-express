@@ -3,13 +3,13 @@ var app = require('../app.js').instance;
 var log = require('../log/log.js').getLog(__filename);
 
 app.get('/logout', function(req, res) {
-    if (!req.session || !req.session.userId) {
-        res.json(403, {
-            err: 'error.logout'
-        });
-        req.session = null;
-        return;
-    }
+    // if (!req.session || !req.session.userId) {
+    //     res.json(403, {
+    //         err: 'error.logout'
+    //     });
+    //     req.session = null;
+    //     return;
+    // }
     req.session = null;
 
     res.json({

@@ -28,7 +28,7 @@ describe(__filename, function() {
         it('forbidden because user was never logged in', function(done) {
             request(app).
                 get('/logout').
-                expect(403).
+                expect(200).
                 end(done);
         });
     });
