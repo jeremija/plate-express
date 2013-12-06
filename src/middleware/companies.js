@@ -9,10 +9,8 @@ app.get('/companies/find', checkAuth, function(req, res) {
 });
 
 app.get('/companies/get/:shortId', checkAuth, function(req, res) {
-    var shortId = req.route.params.shortId;
-
     Company.findOne({
-        shortId: shortId
+        shortId: req.route.params.shortId
     }, common.json(req, res));
 });
 

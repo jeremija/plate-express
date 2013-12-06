@@ -181,23 +181,4 @@ describe(__filename, function() {
         });
     });
 
-
-    // describe('POST /companies/save', function(done) {
-    //     it('should insert new data data', function() {
-
-    //     });
-    //     it('should update the existing data', function() {
-
-    //     });
-    // });
-
-    // describe('POST /companies/remove', function(done) {
-    //     it('should remove the data', function() {
-
-    //     });
-    //     it('should remove multiple data if multiple keys', function() {
-
-    //     });
-    // });
-
 });

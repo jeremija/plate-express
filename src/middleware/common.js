@@ -4,14 +4,13 @@ var keygen = require('../util/keygen.js');
 // var log = require('../log/log.js').getLog(__filename);
 
 /**
- * Sets the `shortId` to the object.
+ * Sets the `shortId` to the object if it was not already set.
  * @param {Object} data   Object to set the `shortId` field to
  * @param {String} field Object's property to take the name from.
  */
 module.exports.setShortId = function(data, field) {
-    if (typeof data.shortId === 'string') {
-        return;
-    }
+    if (typeof data.shortId === 'string') return;
+
     field = field || 'name';
     var value = data[field];
     data.shortId = keygen.generate(value);
@@ -25,12 +24,9 @@ module.exports.setShortId = function(data, field) {
 module.exports.json = function(req, res) {
     var url = req.url;
     return function(err, data) {
-        if (err) {
-            errors.handleError(url, err, res);
-            return;
-        }
+        if (err) return errors.handleError(url, err, res);
+
         res.json({
-            error: undefined,
             data: data
         });
     };
