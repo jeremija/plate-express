@@ -13,7 +13,7 @@ var mongoErrors = {
     // 13440: 'error.db.internal',
 };
 
-function getMongoErrorMessage(err) {
+function getMongoErrorKey(err) {
     var msg = mongoErrors[err.code];
     if (msg) return msg;
 
@@ -31,12 +31,12 @@ module.exports.handleError = function(url, err, res) {
             res.json(400, {error: err});
             break;
         case 'MongoError':
-            var msg = getMongoErrorMessage(err);
-            res.json(400, {error: {name: 'DatabaseError', message: msg}});
+            var msg = getMongoErrorKey(err);
+            res.json(400, {error: {name: 'DatabaseError', key: msg}});
             break;
         default:
             log.error(err);
-            res.json(500, {error: {name: 'Server', message: 'error.server'}});
+            res.json(500, {error: {name: 'Server', key: 'error.server'}});
     }
     return true;
 };

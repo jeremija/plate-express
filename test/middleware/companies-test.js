@@ -137,7 +137,7 @@ describe(__filename, function() {
                 .end(function(err, res) {
                     if (err) done(err);
                     expect(res.body.error).to.be.ok();
-                    expect(res.body.error.message).to.be('error.db.duplicate');
+                    expect(res.body.error.key).to.be('error.db.duplicate');
                     expect(res.body.data).to.not.be.ok();
                     done();
                 });
