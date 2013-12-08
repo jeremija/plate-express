@@ -33,7 +33,7 @@ app.post('/login', function(req, res) {
             res.json(500, {
                 error: {
                     name: 'Server',
-                    message: 'error.internal'
+                    key: 'error.internal'
                 }
             });
             return;
@@ -41,10 +41,10 @@ app.post('/login', function(req, res) {
 
         if (!user) {
             log.debug('user with email', email, 'not found');
-            res.json({
+            res.json(401, {
                 error: {
                     name: 'Authentication',
-                    message: 'error.authentication'
+                    key: 'error.authentication'
                 }
             });
             return;
@@ -54,10 +54,10 @@ app.post('/login', function(req, res) {
             log.debug('user with email', email, 'found, but invalid password');
             req.session = null;
             //TODO use json format
-                res.json({
+                res.json(401, {
                     error: {
                         name: 'Authentication',
-                        message: 'error.authentication'
+                        key: 'error.authentication'
                     }
                 });
             return;

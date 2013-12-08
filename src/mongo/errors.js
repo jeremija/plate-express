@@ -24,8 +24,17 @@ function getMongoErrorKey(err) {
     return msg;
 }
 
-module.exports.handleError = function(url, err, res) {
-    log.error('an error has occurred on url ' + url, err, err.stack);
+/**
+ * Handles an error
+ * @param  {String}   url
+ * @param  {Error}    err
+ * @param  {Response} res
+ * @param  {Boolean}  silent  Skip log if true
+ */
+module.exports.handleError = function(url, err, res, silent) {
+    if (!silent) {
+        log.error('an error has occurred on url ' + url, err, err.stack);
+    }
     switch(err.name) {
         case 'ValidationError':
             res.json(400, {error: err});
@@ -35,7 +44,6 @@ module.exports.handleError = function(url, err, res) {
             res.json(400, {error: {name: 'DatabaseError', key: msg}});
             break;
         default:
-            log.error(err);
             res.json(500, {error: {name: 'Server', key: 'error.server'}});
     }
     return true;

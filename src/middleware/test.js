@@ -1,14 +1,12 @@
 var app = require('../app.js').instance;
 var log = require('../log/log.js').getLog(__filename);
+var errors = require('../mongo/errors.js');
 
 app.get('/test/success', function(req, res) {
-    res.json({value: 'ok'});
+    res.json({data: 'data-received'});
 });
 
-app.get('/test/error404', function(req, res) {
-    res.json(404, {error: 'error.not.found'});
-});
-
-app.get('/test/error400', function(req, res) {
-    res.json(400, {error: 'error.bad.request'});
+app.get('/test/error', function(req, res) {
+    var err = new Error('error12345');
+    errors.handleError('/test/error', err, res, true);
 });

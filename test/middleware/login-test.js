@@ -46,7 +46,7 @@ describe(__filename, function() {
                     'email': 'test@test.com',
                     'password': 'testpwd'
                 }).
-                expect(200).
+                expect(401).
                 expect(/error.authentication/).
                 end(function(err, res) {
                     //console.log('err', err);
@@ -61,7 +61,7 @@ describe(__filename, function() {
                     'email': 'john2@travolta.com',
                     'password': 'some-invalid-password'
                 }).
-                expect(200).
+                expect(401).
                 expect(/error.authentication/).
                 end(function(err, res) {
                     done(err);
