@@ -28,15 +28,15 @@ module.exports.handleError = function(url, err, res) {
     log.error('an error has occurred on url ' + url, err, err.stack);
     switch(err.name) {
         case 'ValidationError':
-            res.json({error: err});
+            res.json(400, {error: err});
             break;
         case 'MongoError':
             var msg = getMongoErrorMessage(err);
-            res.json({error: {name: 'DatabaseError', message: msg}});
+            res.json(400, {error: {name: 'DatabaseError', message: msg}});
             break;
         default:
             log.error(err);
-            res.json({error: {name: 'Server', message: 'error.server'}});
+            res.json(500, {error: {name: 'Server', message: 'error.server'}});
     }
     return true;
 };
