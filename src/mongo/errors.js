@@ -19,9 +19,9 @@ function getMongoErrorKey(err) {
 
     msg = err.lastErrorObject ?
         mongoErrors[err.lastErrorObject.code] :
-        'error.db.internal';
+        undefined;
 
-    return msg;
+    return msg || 'error.db.internal';
 }
 
 /**
@@ -37,7 +37,8 @@ module.exports.handleError = function(url, err, res, silent) {
     }
     switch(err.name) {
         case 'ValidationError':
-            res.json(400, {error: err});
+            res.json(400, {error: {name: 'ValidationError',
+                details: err, key: 'error.validation'}});
             break;
         case 'MongoError':
             var msg = getMongoErrorKey(err);
@@ -53,7 +54,7 @@ module.exports.badRequest = function(res) {
     res.json(400, {
         error: {
             name: 'BadRequest',
-            message: 'error.invalid.url.params'
+            key: 'error.invalid.url.params'
         }
     });
 };
