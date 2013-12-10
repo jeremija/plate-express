@@ -39,6 +39,7 @@ app.post('/carinsurances/save', checkAuth, function(req, res) {
         }
         else {
             carInsurance.name = data.name;
+            carInsurance.carYear = data.carYear;
             carInsurance.licensePlate = data.licensePlate;
             carInsurance.policyNumber = data.policyNumber;
             carInsurance.expires = data.expires;
