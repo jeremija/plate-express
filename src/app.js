@@ -46,7 +46,12 @@ module.exports.init = function(p_port) {
 
     //invalid url handler
     app.use(function(req, res) {
-        res.status(404).send('invalid url');
+        res.status(404).json({
+            error: {
+                name: 'NotFound',
+                key: 'error.not.found'
+            }
+        });
     });
 
     var port = p_port;

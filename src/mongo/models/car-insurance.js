@@ -25,6 +25,7 @@ var carInsurance = new Schema({
         uppercase: true,
         required: true,
         validate: [function(p_value) {
+            if (!p_value) return false;
             // license plate must be in the form of
             // AB123C, AB123CD, AB1234C or AB1234CD
             return p_value.match(/^[A-Za-z]{2}[0-9]{3,4}[A-Za-z]{1,2}$/) ?
@@ -35,6 +36,7 @@ var carInsurance = new Schema({
         type: String,
         required: true,
         validate: [function(p_value) {
+            if (!p_value) return false;
             return p_value.match(/^[0-9]{12}$/) ? true : false;
         }, 'error.invalid.car-insurance.policyNumber']
     },
