@@ -20,6 +20,13 @@ var carInsurance = new Schema({
             return typeof p_value === 'string' && p_value.length > 1;
         }, 'error.invalid.car-insurance.name']
     },
+    carYear: {
+        type: Number,
+        required: true,
+        validate: [function(p_value) {
+            return p_value && p_value > 1900 && p_value < 2100;
+        }, 'error.invalid.car-insurance.carYear']
+    },
     licensePlate: {
         type: String,
         uppercase: true,
