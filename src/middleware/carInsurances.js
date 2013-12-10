@@ -62,7 +62,7 @@ app.post('/carinsurances/save', checkAuth, function(req, res) {
 
 app.post('/carinsurances/delete', checkAuth, function(req, res) {
     var shortId = req.body.shortId;
-    Company.findOneAndRemove({
+    CarInsurance.findOneAndRemove({
         shortId: shortId
     }, {}, common.json(req, res));
 });

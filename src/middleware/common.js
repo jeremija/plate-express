@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var errors = require('../mongo/errors.js');
 var keygen = require('../util/keygen.js');
-// var log = require('../log/log.js').getLog(__filename);
+var log = require('../log/log.js').getLog(__filename);
 
 /**
  * Sets the `shortId` to the object if it was not already set.
@@ -24,6 +24,8 @@ module.exports.setShortId = function(data, field) {
 module.exports.json = function(req, res) {
     var url = req.url;
     return function(err, data) {
+        var status = err ? 'ERROR' : 'SUCCESS';
+        log.debug(req.url, status, data);
         if (err) return errors.handleError(url, err, res);
 
         res.json({
