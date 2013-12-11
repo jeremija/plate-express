@@ -7,7 +7,7 @@ module.exports = function(req, res, next) {
         log.debug('user is not authorized');
         res.status(401).json({
             error: {
-                key: 'not.authorized'
+                key: 'error.not.authorized'
             }
         });
     }
