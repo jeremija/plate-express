@@ -10,3 +10,13 @@ app.get('/test/error', function(req, res) {
     var err = new Error('error12345');
     errors.handleError('/test/error', err, res, true);
 });
+
+app.post('/test/validation-error', function(req, res) {
+    var err = {
+        name: 'ValidationError',
+        errors: {
+            'field1': {}
+        }
+    };
+    errors.handleError('/test/validationError', err, res, false);
+});

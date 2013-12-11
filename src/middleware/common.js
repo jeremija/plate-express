@@ -16,6 +16,15 @@ module.exports.setShortId = function(data, field) {
     data.shortId = keygen.generate(value);
 };
 
+module.exports.copyProperties = function(src, dest) {
+    for (var name in src) {
+        if (!src.hasOwnProperty(name)) continue;
+        if (name === '_id' || name === 'shortId') continue;
+        var prop = src[name];
+        dest[name] = prop;
+    }
+};
+
 /**
  * Creates a callback for mongoose query. If there is an error, reports the
  * error using {@link errors#handleError}.

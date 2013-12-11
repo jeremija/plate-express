@@ -8,6 +8,7 @@ describe(__filename, function() {
     before(function() {
         carInsurance = new CarInsurance({
             name: 'vw golf gti',
+            carYear: 1988,
             licensePlate: 'zg1234a',
             policyNumber: '123456789012',
             expires: Date.now() + 1000000000,

@@ -20,7 +20,7 @@ app.get('/logout', function(req, res) {
 
 app.post('/login', function(req, res) {
     var email = req.body.email;
-    var password = req.body.password;
+    var password = req.body.password || '';
 
     log.debug('trying to find an user with email', email);
 

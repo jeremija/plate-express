@@ -33,32 +33,17 @@ app.post('/carinsurances/save', checkAuth, function(req, res) {
 
     CarInsurance.findOne({shortId: data.shortId}, function(err, carInsurance) {
         if (err) return errors.handleError(req.url, err, res);
+
         if (!carInsurance) {
             carInsurance = new CarInsurance(data);
             common.setShortId(carInsurance);
         }
         else {
-            carInsurance.name = data.name;
-            carInsurance.carYear = data.carYear;
-            carInsurance.licensePlate = data.licensePlate;
-            carInsurance.policyNumber = data.policyNumber;
-            carInsurance.expires = data.expires;
-            carInsurance.power = data.power;
-            carInsurance.maxAllowedMass = data.maxAllowedMass;
-            carInsurance.vehicleType = data.vehicleType;
-            carInsurance.company = data.company;
+            common.copyProperties(data, carInsurance);
         }
+
         carInsurance.save(common.json(req, res));
     });
-
-
-    // var data = req.body;
-    // common.setShortId(data);
-    // CarInsurance.findOneAndUpdate({
-    //     shortId: data.shortId
-    // }, data, {
-    //     upsert: true
-    // }, common.json(req, res));
 });
 
 app.post('/carinsurances/delete', checkAuth, function(req, res) {

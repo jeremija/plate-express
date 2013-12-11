@@ -44,6 +44,9 @@ module.exports.handleError = function(url, err, res, silent) {
             var msg = getMongoErrorKey(err);
             res.json(400, {error: {name: 'DatabaseError', key: msg}});
             break;
+        case 'RefError':
+            res.json(400, {error: err});
+            break;
         default:
             res.json(500, {error: {name: 'Server', key: 'error.server'}});
     }
