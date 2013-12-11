@@ -66,6 +66,22 @@ var carInsurance = new Schema({
         type: String,
         ref: 'Company',
         required: true
+    },
+    bonus: {
+        type: Number,
+        validate: [function(p_value) {
+            return typeof p_value === 'number';
+        }, 'error.invalid.value']
+    },
+    premium: {
+        type: Number,
+        required: true
+    },
+    accident: {
+        type: Boolean
+    },
+    leasing: {
+        type: Boolean
     }
 });
 

@@ -14,6 +14,7 @@ describe(__filename, function() {
             expires: Date.now() + 1000000000,
             power: 120,
             vehicleType: 'PERSONAL',
+            premium: 1200
         });
         company = new Company({
             name: 'test-company',

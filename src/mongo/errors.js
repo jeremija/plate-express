@@ -40,6 +40,19 @@ module.exports.handleError = function(url, err, res, silent) {
             res.json(400, {error: {name: 'ValidationError',
                 details: err, key: 'error.validation'}});
             break;
+        case 'CastError':
+            var errors = {};
+            errors[err.path] = err;
+
+            res.json(400, {
+                error: {
+                    name: 'ValidationError',
+                    details: {
+                        errors: errors
+                    }
+                }
+            });
+            break;
         case 'MongoError':
             var msg = getMongoErrorKey(err);
             res.json(400, {error: {name: 'DatabaseError', key: msg}});
