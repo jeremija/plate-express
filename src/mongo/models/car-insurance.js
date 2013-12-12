@@ -50,6 +50,10 @@ var carInsurance = new Schema({
     expires: {
         type: Date,
         required: true,
+        validate: [function(p_value) {
+            if (!p_value || typeof p_value.getTime !== 'function') return false;
+            return p_value.getTime() > Date.now() ? true : false;
+        }, 'error.invalid.expires']
     },
     power: {
         type: Number,
