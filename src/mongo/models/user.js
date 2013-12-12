@@ -18,7 +18,12 @@ var userSchema = new Schema({
         required: true,
         index: {
             unique: true
-        }
+        },
+        validate: [function(p_value) {
+            if (!p_value) return false;
+            return p_value.match(/^[a-zA-Z0-9\.!#$%&'*+-\/=?^_`{|}~]*?@[a-zA-Z0-9\.].*$/) ?
+                true : false;
+        }, 'error.invalid.email']
     },
     salt: {
         type: String,
