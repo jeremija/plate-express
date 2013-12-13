@@ -19,6 +19,7 @@ module.exports = {
         sessionSecret: '1174d307-8373-48ec-b35f-122631f7bd95',
         port: 8000,
         securePort: 8443,
+        cert: 'server',
         https: false,
         http: true
     },

@@ -19,8 +19,10 @@ module.exports = {
         log.debug('started http server on port ' + port);
     },
     _startHttps: function(expressApp, port) {
-        var privateKey = fs.readFileSync(__dirname + '/../ssl/server.key', 'utf8');
-        var certificate = fs.readFileSync(__dirname + '/../ssl/server.crt', 'utf8');
+        var privateKey = fs.readFileSync(
+            __dirname + '/../ssl/' + config.express.cert + '.key', 'utf8');
+        var certificate = fs.readFileSync(
+            __dirname + '/../ssl/' + config.express.cert + '.crt', 'utf8');
         var credentials = {
             key: privateKey,
             cert: certificate
