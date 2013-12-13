@@ -20,6 +20,7 @@ module.exports.init = function() {
 
     //make this app instance available to other modules
     module.exports.instance = app;
+    app.enable('trust proxy');
 
     setStaticFolders(app, config.express.publicFolders);
 
@@ -32,6 +33,7 @@ module.exports.init = function() {
     //cookieSession for handling user session
     app.use(express.cookieParser(config.express.sessionSecret));
     app.use(express.cookieSession({
+        proxy: true,
         cookie: {
             secure: config.express.sessionSecure ? true : false
         }
