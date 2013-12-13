@@ -2,6 +2,7 @@ var config = require('./config.js');
 var log = require('./log/log.js').getLog(__filename);
 var mongooseConfig = require('./mongo/mongoose.js');
 
+var fs = require('fs');
 var http = require('http');
 var https = require('https');
 
@@ -18,8 +19,8 @@ module.exports = {
         log.debug('started http server on port ' + port);
     },
     _startHttps: function(expressApp, port) {
-        var privateKey = fs.readFileSync('sslcert/server.key', 'utf8');
-        var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+        var privateKey = fs.readFileSync(__dirname + '/../ssl/server.key', 'utf8');
+        var certificate = fs.readFileSync(__dirname + '/../ssl/server.crt', 'utf8');
         var credentials = {
             key: privateKey,
             cert: certificate
