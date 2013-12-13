@@ -2,7 +2,7 @@
   "name": "plate-express",
   "description": "app for tracking insurance expiration dates",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "jeremija <jerko.steiner@gmail.com>",
   "repository": {
     "type": "git",
