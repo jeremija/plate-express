@@ -32,7 +32,9 @@ module.exports.init = function() {
     //cookieSession for handling user session
     app.use(express.cookieParser(config.express.sessionSecret));
     app.use(express.cookieSession({
-        secure: config.express.sessionSecure ? true : false
+        cookie: {
+            secure: config.express.sessionSecure ? true : false
+        }
     }));
 
     //to be able to read the req.body parameters on POST request

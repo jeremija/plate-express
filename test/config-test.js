@@ -1,6 +1,9 @@
 var expect = require('expect.js');
 var config = require('../src/config.js');
 
+// disable secure cookie for testing
+config.express.sessionSecure = false;
+
 describe(__filename, function() {
     it('should be ok', function() {
         expect(config).to.be.ok();
