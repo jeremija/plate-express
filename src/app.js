@@ -15,7 +15,7 @@ function setStaticFolders(p_app, p_folders) {
     }
 }
 
-module.exports.init = function(p_port) {
+module.exports.init = function() {
     var app = express();
 
     //make this app instance available to other modules
@@ -54,10 +54,15 @@ module.exports.init = function(p_port) {
         });
     });
 
-    var port = p_port;
-    var server = app.listen(port);
+    // var port = p_port;
 
-    log.debug('listening on port', port);
+    // var httpServer = http.createServer(app);
+    // httpServer.listen(port);
 
-    return server;
+    // var httpsServer = https.createServer(credentials, app);
+    // var server = app.listen(port);
+
+    log.debug('initialized app');
+
+    return app;
 };

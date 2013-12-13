@@ -2,14 +2,36 @@ var config = require('./config.js');
 var log = require('./log/log.js').getLog(__filename);
 var mongooseConfig = require('./mongo/mongoose.js');
 
+var http = require('http');
+var https = require('https');
+
 var app = require('./app.js');
 
-var server;
+var httpServer;
+var httpsServer;
 var dbConn;
 
 module.exports = {
+    _startHttp: function(expressApp, port) {
+        httpServer = http.createServer(expressApp);
+        httpServer.listen(port);
+        log.debug('started http server on port ' + port);
+    },
+    _startHttps: function(expressApp, port) {
+        var privateKey = fs.readFileSync('sslcert/server.key', 'utf8');
+        var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+        var credentials = {
+            key: privateKey,
+            cert: certificate
+        };
+
+        httpServer = https.createServer(credentials, expressApp);
+        httpServer.listen(port);
+        log.debug('started https server on port ' + port);
+    },
     start: function(p_callback) {
         log.debug('application starting');
+        var self = this;
 
         //create a mongodb connection and start application
         dbConn = mongooseConfig.init(config.mongo.url, function(err, conn) {
@@ -19,7 +41,16 @@ module.exports = {
                 return;
             }
 
-            server = app.init(process.env.port || config.express.port);
+            var expressApp = app.init();
+
+            // process.env.port || config.express.port
+            if (config.express.http) {
+                self._startHttp(expressApp, config.express.port);
+            }
+            if (config.express.https) {
+                self._startHttps(expressApp, config.express.securePort);
+            }
+
             //success
             log.debug('application started');
             if (p_callback) {
@@ -31,7 +62,9 @@ module.exports = {
         log.debug('attempting to stop application');
 
         try {
-            server.close();
+            if (httpServer) httpServer.close();
+            if (httpsServer) httpsServer.close();
+
             dbConn.once('close', function() {
                 log.debug('application stopped');
                 if (p_callback) {
