@@ -17,6 +17,7 @@ module.exports = {
         //     '/www-private'
         // ],
         sessionSecret: '1174d307-8373-48ec-b35f-122631f7bd95',
+        sessionSecure: false,
         port: 8000,
         securePort: 8443,
         cert: 'server',
