@@ -35,7 +35,9 @@ module.exports.init = function() {
     app.use(express.cookieSession({
         proxy: true,
         cookie: {
-            secure: config.express.sessionSecure ? true : false
+            secure: config.express.sessionSecure ? true : false,
+            maxAge: 10*60*60*1000,
+            expires: new Date(Date.now() + 10*60*60*1000)
         }
     }));
 

@@ -67,9 +67,9 @@ app.post('/login', function(req, res) {
         console.log('req.session.cookie', req.session.cookie);
 
         // 10 hrs
-        var age = 10*60*60*1000;
-        req.session.cookie.expires = new Date(Date.now() + age);
-        req.session.cookie.maxAge = age;
+        // var age = 10*60*60*1000;
+        // req.session.cookie.expires = new Date(Date.now() + age);
+        // req.session.cookie.maxAge = age;
         req.session.userId = email;
 
         res.json({err: undefined, data: user.toObject()});
