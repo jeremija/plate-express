@@ -10,8 +10,8 @@ module.exports = {
     },
     express: {
         publicFolders: [
-            // '/www-src',
-            '/www-dist'
+            '/www-src',
+            // '/www-dist'
         ],
         // privateFolders: [
         //     '/www-private'

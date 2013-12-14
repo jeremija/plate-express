@@ -26,8 +26,8 @@ describe(__filename, function() {
         company.save(function(err, company) {
             expect(err && err.errors && err.errors.oib).to.be.ok();
             expect(err.errors.name).to.be.ok();
-            expect(err.errors.name.message).to.be('error.invalid.company.name');
-            expect(err.errors.oib.message).to.be('error.invalid.company.oib');
+            expect(err.errors.name.message).to.be('validation.company.name');
+            expect(err.errors.oib.message).to.be('validation.company.oib');
             done();
         });
     });
@@ -38,7 +38,7 @@ describe(__filename, function() {
         company.save(function(err, company) {
             expect(err && err.errors && err.errors.oib).to.be.ok();
             expect(err.errors.name).to.not.be.ok();
-            expect(err.errors.oib.message).to.be('error.invalid.company.oib');
+            expect(err.errors.oib.message).to.be('validation.company.oib');
             done();
         });
     });

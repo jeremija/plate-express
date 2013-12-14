@@ -19,7 +19,7 @@ var companySchema = new Schema({
         },
         validate: [function(p_value) {
             return typeof p_value === 'string' && p_value.length > 1;
-        }, 'error.invalid.company.name']
+        }, 'validation.company.name']
     },
     oib: {
         type: String,
@@ -27,7 +27,7 @@ var companySchema = new Schema({
         index: {
             unique: true
         },
-        validate: [oibValidator.validate, 'error.invalid.company.oib']
+        validate: [oibValidator.validate, 'validation.company.oib']
     },
     carInsurances: [{
         type: Number,

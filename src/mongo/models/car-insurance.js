@@ -18,14 +18,14 @@ var carInsurance = new Schema({
         },
         validate: [function(p_value) {
             return typeof p_value === 'string' && p_value.length > 1;
-        }, 'error.invalid.car-insurance.name']
+        }, 'validation.carinsurance.name']
     },
     carYear: {
         type: Number,
         required: true,
         validate: [function(p_value) {
             return p_value && p_value > 1900 && p_value < 2100;
-        }, 'error.invalid.car-insurance.carYear']
+        }, 'validation.carinsurance.carYear']
     },
     licensePlate: {
         type: String,
@@ -37,7 +37,7 @@ var carInsurance = new Schema({
             // AB123C, AB123CD, AB1234C or AB1234CD
             return p_value.match(/^[A-Za-z]{2}[0-9]{3,4}[A-Za-z]{1,2}$/) ?
                 true : false;
-        }, 'error.invalid.car-insurance.licensePlate']
+        }, 'validation.carinsurance.licensePlate']
     },
     policyNumber: {
         type: String,
@@ -45,7 +45,7 @@ var carInsurance = new Schema({
         validate: [function(p_value) {
             if (!p_value) return false;
             return p_value.match(/^[0-9]{12}$/) ? true : false;
-        }, 'error.invalid.car-insurance.policyNumber']
+        }, 'validation.carinsurance.policyNumber']
     },
     expires: {
         type: Date,
@@ -53,7 +53,7 @@ var carInsurance = new Schema({
         validate: [function(p_value) {
             if (!p_value || typeof p_value.getTime !== 'function') return false;
             return p_value.getTime() > Date.now() ? true : false;
-        }, 'error.invalid.expires']
+        }, 'validation.date']
     },
     power: {
         type: Number,
@@ -72,11 +72,8 @@ var carInsurance = new Schema({
         required: true
     },
     bonus: {
-        type: Number,
-        validate: [function(p_value) {
-            return typeof p_value === 'number';
-        }, 'error.invalid.value']
-    },
+        type: Number
+            },
     premium: {
         type: Number,
         required: true
