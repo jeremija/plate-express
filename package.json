@@ -2,6 +2,10 @@
   "name": "plate-express",
   "description": "app for tracking insurance expiration dates",
   "private": true,
+  "scripts": {
+    "start": "grunt start",
+    "test": "grunt test"
+  },
   "version": "0.1.4",
   "author": "jeremija <jerko.steiner@gmail.com>",
   "repository": {
