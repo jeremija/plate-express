@@ -18,7 +18,8 @@
     "mongoose": "~3.8.0",
     "crypto": "0.0.3",
     "node-uuid": "~1.4.1",
-    "async": "~0.2.9"
+    "async": "~0.2.9",
+    "nodemailer": "~0.6.0"
   },
   "devDependencies": {
     "mocha": "~1.14.0",
