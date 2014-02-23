@@ -6,6 +6,9 @@ var CarInsurance = require('./mongo/models/car-insurance');
 var Company = require('./mongo/models/company');
 var nodemailer = require('nodemailer');
 
+// read the first argument (number of days)
+var days = process.argv[2] || 14;
+
 function daysToMillis(days) {
     return 1000 * 60 * 60 * 24 * days;
 }
@@ -22,14 +25,16 @@ function closeConncetion() {
 process.on('SIGINT', closeConncetion);
 
 function generateEmailBody(cars) {
-    var body = '<table>' +
+    var body = '<h1>Nekim vozilima uskoro istice osiguranje</h1>';
+    body += "<p>Broj vozila: " + cars.length + '</p>';
+    body += '<table>' +
         '<thead>' +
-            '<th>Car</th>' +
-            '<th>Year</th>' +
-            '<th>License Plate</th>' +
-            '<th>Policy number</th>' +
-            '<th>Company</th>' +
-            '<th>Expires</th>' +
+            '<th>Vozilo</th>' +
+            '<th>Godina</th>' +
+            '<th>Reg. oznaka</th>' +
+            '<th>Broj police</th>' +
+            '<th>Tvrtka</th>' +
+            '<th>Skadenca</th>' +
         '</thead>' +
         '<tbody>';
 
@@ -42,7 +47,7 @@ function generateEmailBody(cars) {
         addCell(car.year);
         addCell(car.licensePlate);
         addCell(car.policyNumber);
-        addCell(car.company);
+        addCell(car.company ? car.company.name : car.company);
 
         var expires = car.expires;
         addCell(expires.getDate() + '.' +
@@ -81,7 +86,7 @@ function generateEmailBody(cars) {
 
 function sendMail(htmlBody, callback) {
     console.log('htmlBody', htmlBody);
-    callback();
+    callback(undefined, 'mail logged to output');
 }
 
 async.waterfall([
@@ -92,20 +97,29 @@ async.waterfall([
         dbConn = conn;
 
         log.debug('db connection initiated');
+
+        // because dates are stored in UTC format
+        var dateFrom = new Date().setHours(-1, 0, 0, 0) + daysToMillis(days);
+        var dateTo = new Date().setHours(22, 59, 59, 999) + daysToMillis(days);
+
+        console.log('attempting to find cars from ' + new Date(dateFrom) + ' to ' + new Date(dateTo));
+
         CarInsurance.find({
             expires: {
-                $gt: Date.now(),
-                $lt: Date.now() + daysToMillis(14)
+                $gt: dateFrom,
+                $lt: dateTo
+                // $gt: Date.now(),
+                // $lt: Date.now() + daysToMillis(14)
             }
         }).populate('company', 'name').exec(callback);
     },
     function(cars, callback) {
         if (!cars.length) {
             log.debug('no cars found, skipping email');
-            callback();
+            callback(undefined, 'no mail sent because no cars were found');
             return;
         }
-        // log.debug('got cars:', cars);
+        log.debug('got cars:', cars);
         var body = generateEmailBody(cars);
         sendMail(body, callback);
     },
